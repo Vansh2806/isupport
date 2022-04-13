@@ -14,20 +14,28 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
-import { NavLink } from "react-router-dom";
-import { Nav, Collapse } from "reactstrap";
+import React, { useState, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
+import { Nav, Collapse } from 'reactstrap';
 // javascript plugin used to create scrollbars on windows
-import PerfectScrollbar from "perfect-scrollbar";
-
-import avatar from "assets/img/faces/ayo-ogunseinde-2.jpg";
-import logo from "assets/img/react-logo.png";
-
+import PerfectScrollbar from 'perfect-scrollbar';
+import Styles from './sidebar.module.css';
+import avatar from 'assets/img/faces/ayo-ogunseinde-2.jpg';
+import logo from 'assets/img/react-logo.png';
+import Login from 'views/pages/Login';
 var ps;
 
 function Sidebar(props) {
+  const [login, setLogin] = useState('');
+  useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const id = queryParams.get('id');
+
+    setLogin(id);
+  }, []);
   const [openAvatar, setOpenAvatar] = React.useState(false);
   const [collapseStates, setCollapseStates] = React.useState({});
+  const [activeFlag, setActiveFlag] = useState(false);
   const sidebar = React.useRef();
   // this creates the intial state of this component based on the collapse routes
   // that it gets through props.routes
@@ -66,48 +74,46 @@ function Sidebar(props) {
       }
       if (prop.collapse) {
         var st = {};
-        st[prop["state"]] = !collapseStates[prop.state];
+        st[prop['state']] = !collapseStates[prop.state];
         return (
           <li
-            className={getCollapseInitialState(prop.views) ? "active" : ""}
-            key={key}
-          >
+            className={getCollapseInitialState(prop.views) ? 'active' : ''}
+            key={key}>
             <a
-              href="#pablo"
-              data-toggle="collapse"
+              href='/'
+              data-toggle='collapse'
               aria-expanded={collapseStates[prop.state]}
               onClick={(e) => {
                 e.preventDefault();
                 setCollapseStates(st);
-              }}
-            >
+              }}>
               {prop.icon !== undefined ? (
                 <>
                   <i className={prop.icon} />
                   <p>
                     {prop.name}
-                    <b className="caret" />
+                    <b className='caret' />
                   </p>
                 </>
               ) : (
                 <>
-                  <span className="sidebar-mini-icon">{prop.mini}</span>
-                  <span className="sidebar-normal">
+                  <span className='sidebar-mini-icon'>{prop.mini}</span>
+                  <span className='sidebar-normal'>
                     {prop.name}
-                    <b className="caret" />
+                    <b className='caret' />
                   </span>
                 </>
               )}
             </a>
             <Collapse isOpen={collapseStates[prop.state]}>
-              <ul className="nav">{createLinks(prop.views)}</ul>
+              <ul className='nav'>{createLinks(prop.views)}</ul>
             </Collapse>
           </li>
         );
       }
       return (
         <li className={activeRoute(prop.layout + prop.path)} key={key}>
-          <NavLink to={prop.layout + prop.path} activeClassName="">
+          <NavLink to={prop.layout + prop.path} activeClassName=''>
             {prop.icon !== undefined ? (
               <>
                 <i className={prop.icon} />
@@ -115,8 +121,8 @@ function Sidebar(props) {
               </>
             ) : (
               <>
-                <span className="sidebar-mini-icon">{prop.mini}</span>
-                <span className="sidebar-normal">{prop.name}</span>
+                <span className='sidebar-mini-icon'>{prop.mini}</span>
+                <span className='sidebar-normal'>{prop.name}</span>
               </>
             )}
           </NavLink>
@@ -126,11 +132,11 @@ function Sidebar(props) {
   };
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName) => {
-    return props.location.pathname.indexOf(routeName) > -1 ? "active" : "";
+    return props.location.pathname.indexOf(routeName) > -1 ? 'active' : '';
   };
   React.useEffect(() => {
     // if you are using a Windows Machine, the scrollbars will have a Mac look
-    if (navigator.platform.indexOf("Win") > -1) {
+    if (navigator.platform.indexOf('Win') > -1) {
       ps = new PerfectScrollbar(sidebar.current, {
         suppressScrollX: true,
         suppressScrollY: false,
@@ -139,7 +145,7 @@ function Sidebar(props) {
     return function cleanup() {
       // we need to destroy the false scrollbar when we navigate
       // to a page that doesn't have this component rendered
-      if (navigator.platform.indexOf("Win") > -1) {
+      if (navigator.platform.indexOf('Win') > -1) {
         ps.destroy();
       }
     };
@@ -148,70 +154,25 @@ function Sidebar(props) {
     setCollapseStates(getCollapseStates(props.routes));
   }, []);
   return (
-    <div
-      className="sidebar"
-      data-color={props.bgColor}
-      data-active-color={props.activeColor}
-    >
-      <div className="logo">
-        <a
-          href="https://www.creative-tim.com"
-          className="simple-text logo-mini"
-        >
-          <div className="logo-img">
-            <img src={logo} alt="react-logo" />
+    <div className='sidebar' data-color='black' data-active-color='warning'>
+      <div className={`sidebar-wrapper ${Styles.sidebarWrapper}`} ref={sidebar}>
+        <div className={`user ${Styles.user2}`}>
+          <div className='photo'>
+            <img src={avatar} alt='Avatar' />
           </div>
-        </a>
-        <a
-          href="https://www.creative-tim.com"
-          className="simple-text logo-normal"
-        >
-          Creative Tim
-        </a>
-      </div>
-
-      <div className="sidebar-wrapper" ref={sidebar}>
-        <div className="user">
-          <div className="photo">
-            <img src={avatar} alt="Avatar" />
-          </div>
-          <div className="info">
+          <div className='info'>
             <a
-              href="#pablo"
-              data-toggle="collapse"
+              href='#pablo'
+              data-toggle='collapse'
               aria-expanded={openAvatar}
-              onClick={() => setOpenAvatar(!openAvatar)}
-            >
-              <span>
-                Chet Faker
-                <b className="caret" />
-              </span>
+              onClick={() => setOpenAvatar(!openAvatar)}>
+              <h6 className={Styles.commoncolor}>iSupport</h6>
             </a>
-            <Collapse isOpen={openAvatar}>
-              <ul className="nav">
-                <li>
-                  <NavLink to="/admin/user-profile" activeClassName="">
-                    <span className="sidebar-mini-icon">MP</span>
-                    <span className="sidebar-normal">My Profile</span>
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/admin/user-profile" activeClassName="">
-                    <span className="sidebar-mini-icon">EP</span>
-                    <span className="sidebar-normal">Edit Profile</span>
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/admin/user-profile" activeClassName="">
-                    <span className="sidebar-mini-icon">S</span>
-                    <span className="sidebar-normal">Settings</span>
-                  </NavLink>
-                </li>
-              </ul>
-            </Collapse>
           </div>
         </div>
-        <Nav>{createLinks(props.routes)}</Nav>
+        <Nav className={` ${Styles.sidebarWrapper}`}>
+          {createLinks(props.routes)}
+        </Nav>
       </div>
     </div>
   );

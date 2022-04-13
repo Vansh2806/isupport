@@ -1,0 +1,12 @@
+.sidebarWrapper > li > a:hover {
+  background-color: #e91e63 !important;
+  color: black !important;
+}
+.sidebarWrapper .nc-icon :hover {
+  background-color: #e91e63 !important;
+  color: black !important;
+}
+.sidebarWrapper > li > a:hover {
+  background-color: #e91e63 !important;
+  color: black !important;
+}

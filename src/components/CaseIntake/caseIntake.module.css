@@ -1,0 +1,30 @@
+.buttonstyle:hover {
+  border-radius: 5px !important;
+  background: #ff9800 !important;
+}
+
+.buttonstyle {
+  /* background-color: red; */
+  border-radius: 5px !important;
+  background: transparent !important;
+  box-shadow: none;
+  border: '0px';
+}
+.buttonstyleOnClick {
+  /* background-color: red; */
+  border-radius: 5px !important;
+  background: #ff9800 !important;
+}
+.buttonstyleOnClick {
+  /* background-color: red; */
+  border-radius: 5px !important;
+  background: #ff9800 !important;
+}
+
+.blackText {
+  color: black;
+}
+
+.whiteText {
+  color: white;
+}

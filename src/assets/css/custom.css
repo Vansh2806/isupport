@@ -1,0 +1,10 @@
+.case-filter{
+    cursor: pointer;
+    font-size: 30px;
+    
+}
+
+
+.btn-filter:active, .btn-filter:focus , .btn-filter{
+    border: none;
+}
