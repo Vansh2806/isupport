@@ -1,0 +1,42 @@
+{
+  "files": {
+    "main.css": "/paper-dashboard-pro-react/static/css/main.2939eed0.chunk.css",
+    "main.js": "/paper-dashboard-pro-react/static/js/main.b13b8748.chunk.js",
+    "main.js.map": "/paper-dashboard-pro-react/static/js/main.b13b8748.chunk.js.map",
+    "runtime-main.js": "/paper-dashboard-pro-react/static/js/runtime-main.16dc8aac.js",
+    "runtime-main.js.map": "/paper-dashboard-pro-react/static/js/runtime-main.16dc8aac.js.map",
+    "static/css/2.54208fce.chunk.css": "/paper-dashboard-pro-react/static/css/2.54208fce.chunk.css",
+    "static/js/2.be6de017.chunk.js": "/paper-dashboard-pro-react/static/js/2.be6de017.chunk.js",
+    "static/js/2.be6de017.chunk.js.map": "/paper-dashboard-pro-react/static/js/2.be6de017.chunk.js.map",
+    "index.html": "/paper-dashboard-pro-react/index.html",
+    "static/css/2.54208fce.chunk.css.map": "/paper-dashboard-pro-react/static/css/2.54208fce.chunk.css.map",
+    "static/css/main.2939eed0.chunk.css.map": "/paper-dashboard-pro-react/static/css/main.2939eed0.chunk.css.map",
+    "static/js/2.be6de017.chunk.js.LICENSE.txt": "/paper-dashboard-pro-react/static/js/2.be6de017.chunk.js.LICENSE.txt",
+    "static/js/main.b13b8748.chunk.js.LICENSE.txt": "/paper-dashboard-pro-react/static/js/main.b13b8748.chunk.js.LICENSE.txt",
+    "static/media/agenda.png": "/paper-dashboard-pro-react/static/media/agenda.0443e008.png",
+    "static/media/ayo-ogunseinde-2.jpg": "/paper-dashboard-pro-react/static/media/ayo-ogunseinde-2.f4af8f2c.jpg",
+    "static/media/bruno-abatti.jpg": "/paper-dashboard-pro-react/static/media/bruno-abatti.ac5426e5.jpg",
+    "static/media/clem-onojeghuo-2.jpg": "/paper-dashboard-pro-react/static/media/clem-onojeghuo-2.d16702ce.jpg",
+    "static/media/damir-bosnjak.jpg": "/paper-dashboard-pro-react/static/media/damir-bosnjak.efcaca50.jpg",
+    "static/media/daniel-olahs.jpg": "/paper-dashboard-pro-react/static/media/daniel-olahs.fe7b9cc0.jpg",
+    "static/media/david-marcu.jpg": "/paper-dashboard-pro-react/static/media/david-marcu.9f5583c3.jpg",
+    "static/media/erik-lucatero-2.jpg": "/paper-dashboard-pro-react/static/media/erik-lucatero-2.d09715ab.jpg",
+    "static/media/evernote.png": "/paper-dashboard-pro-react/static/media/evernote.e3b22adb.png",
+    "static/media/fabio-mangione.jpg": "/paper-dashboard-pro-react/static/media/fabio-mangione.488bc249.jpg",
+    "static/media/image_placeholder.61b9ec86.jpg": "/paper-dashboard-pro-react/static/media/image_placeholder.61b9ec86.jpg",
+    "static/media/jan-sendereks.jpg": "/paper-dashboard-pro-react/static/media/jan-sendereks.d8540b7e.jpg",
+    "static/media/joe-gardner-2.jpg": "/paper-dashboard-pro-react/static/media/joe-gardner-2.09841708.jpg",
+    "static/media/kaci-baum-2.jpg": "/paper-dashboard-pro-react/static/media/kaci-baum-2.9b929eea.jpg",
+    "static/media/mike.jpg": "/paper-dashboard-pro-react/static/media/mike.d34d0690.jpg",
+    "static/media/paper-dashboard.scss?v=1.3.0": "/paper-dashboard-pro-react/static/media/nucleo-icons.ec16bc4c.woff2",
+    "static/media/placeholder.59ffd830.jpg": "/paper-dashboard-pro-react/static/media/placeholder.59ffd830.jpg",
+    "static/media/react-logo.5bd77d01.png": "/paper-dashboard-pro-react/static/media/react-logo.5bd77d01.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.16dc8aac.js",
+    "static/css/2.54208fce.chunk.css",
+    "static/js/2.be6de017.chunk.js",
+    "static/css/main.2939eed0.chunk.css",
+    "static/js/main.b13b8748.chunk.js"
+  ]
+}
