@@ -11,8 +11,8 @@ import NullFlavoursConfiguration from './NullFlavoursConfiguration';
 import R2AndR3Configuration from './R2AndR3Configuration';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import R2AndR3ConfigurationForm from './R2AndR3ConfigurationForm';
-import NullFlavoursConfigurationForm from './NullFlavoursConfigurationForm';
-
+import R3ConfigurationForm from './R3ConfigurationForm';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import EditNullFlavourConfForm from './EditNullFlavourConfForm';
 import EditR2AndR3ConfForm from './EditR2AndR3ConfForm';
 import Modal from '@mui/material/Modal';
@@ -25,17 +25,58 @@ const Configuration = () => {
   const [submitButton, setSubmitButton] = useState(false);
   const [organization, setOrganization] = useState('');
   const [organizations, setOrganizations] = useState([]);
+  const [factorySettings, setFactorySettings] = useState([]);
+  const [configTable, setConfigTable] = useState([]);
+  const [selectedConfigRow, setSelectedConfigRow] = useState('');
+  const [selectedOrganizationRow, setSelectedOrganizationRow] = useState('');
+  const [configRes, setConfigRes] = useState('');
+  const [viewTableData, setViewTableData] = useState([]);
+  const [viewLoading, setViewLoading] = useState(false);
   useEffect(() => {
+    axios.get('http://3.130.2.241:5000/config/get_config').then((res) => {
+      setConfigTable(res.data);
+      console.log(res.data);
+    });
     axios.get('http://3.133.20.223:8080/getAllOrganization/').then((res) => {
       console.log(res.data);
       setOrganizations(res.data.organizations);
     });
   }, []);
+  const handleContinue = () => {
+    let arr = factorySettings;
+    // setSubmitButton(true);
+    arr.forEach((item) => {
+      item.organization = organization;
+    });
+    console.log('arr', arr);
+    setFactorySettings(arr);
+    // axios.post('http://3.130.2.241:5000/config/post_factory_settings', {
+    //   config_type: configType,
+    //   data: arr,
+    // });
+    axios
+      .post('http://3.130.2.241:5000/config/post_config', {
+        configuration_type: configType,
+        organization: organization,
+        data: arr,
+      })
+      .then((res) => {
+        console.log('response', res.data);
+        setConfigRes(res.data);
+        if (res.data != 'Configuration Already Exists') {
+          setSubmitButton(true);
+        }
+        setTimeout(() => {
+          setConfigRes('');
+        }, 2000);
+      });
+  };
   const handleViewOpen = () => {
     setViewModal(true);
   };
   const handleViewClose = () => {
     setViewModal(false);
+    setSelectedConfigRow('');
   };
   const handleEditOpen = () => {
     setEditModal(true);
@@ -43,13 +84,34 @@ const Configuration = () => {
   const handleEditClose = () => {
     setEditModal(false);
   };
+  const handleView = (config, organization) => {
+    setViewLoading(true);
+    setSelectedConfigRow(config);
+    setSelectedOrganizationRow(organization);
+    axios
+      .post('http://3.130.2.241:5000/config/view_config', {
+        configType: config,
+        organization: organization,
+      })
+      .then((res) => {
+        console.log(res.data);
+        setViewTableData(res.data);
+      })
+      .then(() => {
+        setViewLoading(false);
+      });
+  };
+  const handleEdit = (config, organization) => {
+    setSelectedConfigRow(config);
+    setSelectedOrganizationRow(organization);
+  };
 
   const style = {
     position: 'absolute',
     top: '50%',
-    left: '50%',
+    left: '70%',
     transform: 'translate(-50%, -50%)',
-    width: 700,
+    width: 1100,
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
@@ -95,65 +157,81 @@ const Configuration = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>
-                          <div class='form-check'>
-                            <label class='form-check-label'>
-                              <input
-                                class='form-check-input'
-                                type='checkbox'
-                                value=''
+                      {configTable.map((item) => (
+                        <tr>
+                          <td>
+                            <div class='form-check'>
+                              <label class='form-check-label'>
+                                <input
+                                  class='form-check-input'
+                                  type='checkbox'
+                                  value=''
+                                />
+                                <span class='form-check-sign'>
+                                  <span class='check'></span>
+                                </span>
+                              </label>
+                            </div>
+                          </td>
+                          <td>{item.id}</td>
+                          <td>{item.configuration_type}</td>
+                          <td>{item.organization}</td>
+
+                          <Modal
+                            open={selectedConfigRow == 'R2 Configuration'}
+                            onClose={handleViewClose}
+                            aria-labelledby='modal-modal-title'
+                            aria-describedby='modal-modal-description'
+                            style={{ width: '1000px' }}>
+                            <Box sx={style}>
+                              <R2AndR3Configuration
+                                viewTableData={viewTableData}
                               />
-                              <span class='form-check-sign'>
-                                <span class='check'></span>
-                              </span>
-                            </label>
-                          </div>
-                        </td>
-                        <td>1</td>
-                        <td>item.case_no</td>
-                        <td>item.patient_age</td>
+                            </Box>
+                          </Modal>
+                          <Modal
+                            open={editModal}
+                            onClose={handleEditClose}
+                            aria-labelledby='modal-modal-title'
+                            aria-describedby='modal-modal-description'>
+                            <Box sx={style}>
+                              <EditR2AndR3ConfForm />
+                            </Box>
+                          </Modal>
 
-                        <Modal
-                          open={viewModal}
-                          onClose={handleViewClose}
-                          aria-labelledby='modal-modal-title'
-                          aria-describedby='modal-modal-description'>
-                          <Box sx={style}>
-                            <R2AndR3Configuration />
-                          </Box>
-                        </Modal>
-                        <Modal
-                          open={editModal}
-                          onClose={handleEditClose}
-                          aria-labelledby='modal-modal-title'
-                          aria-describedby='modal-modal-description'>
-                          <Box sx={style}>
-                            <EditR2AndR3ConfForm />
-                          </Box>
-                        </Modal>
-
-                        <td class='td-actions text-right'>
-                          <button
-                            type='button'
-                            rel='tooltip'
-                            class='btn btn-info'
-                            onClick={() => {
-                              handleViewOpen();
-                            }}>
-                            <RemoveRedEyeIcon fontSize='small' />
-                          </button>
-                          <button
-                            type='button'
-                            rel='tooltip'
-                            class='btn btn-rose'
-                            onClick={() => {
-                              setEditModal(true);
-                            }}>
-                            <i class='material-icons'>edit</i>
-                          </button>
-                        </td>
-                      </tr>
+                          <td class='td-actions text-right'>
+                            <button
+                              type='button'
+                              rel='tooltip'
+                              class='btn btn-info'
+                              onClick={() => {
+                                handleView(
+                                  item.configuration_type,
+                                  item.organization
+                                );
+                                handleViewOpen();
+                              }}>
+                              <RemoveRedEyeIcon fontSize='small' />
+                            </button>
+                            <button
+                              type='button'
+                              rel='tooltip'
+                              class='btn btn-rose'
+                              onClick={() => {
+                                setAddConfig(true);
+                                setConfigType(item.configuration_type);
+                                setOrganization(item.organization);
+                                setSubmitButton(true);
+                                console.log(
+                                  item.configuration_type,
+                                  item.organization
+                                );
+                              }}>
+                              <i class='material-icons'>edit</i>
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>
@@ -170,18 +248,39 @@ const Configuration = () => {
                 <h3 class='card-title'>Configurations</h3>
               </div>
 
-              {configType == 'Null Flavours Configuration' &&
-                submitButton == true && (
-                  <NullFlavoursConfigurationForm setAddConfig={setAddConfig} />
-                )}
-              {configType == 'R2 and R3 Configuration' &&
-                submitButton == true && (
-                  <R2AndR3ConfigurationForm setAddConfig={setAddConfig} />
-                )}
+              {configType == 'R3 Configuration' && submitButton == true && (
+                <R3ConfigurationForm
+                  setAddConfig={setAddConfig}
+                  configType={configType}
+                  organization={organization}
+                  setSubmitButton={setSubmitButton}
+                />
+              )}
+              {configType == 'R2 Configuration' && submitButton == true && (
+                <R2AndR3ConfigurationForm
+                  setAddConfig={setAddConfig}
+                  configType={configType}
+                  organization={organization}
+                  setSubmitButton={setSubmitButton}
+                />
+              )}
 
               <div class='card-body'>
+                {configRes == 'Configuration Already Exists' && (
+                  <div class='alert alert-danger' role='alert'>
+                    Configuration Already Exists
+                  </div>
+                )}
                 {submitButton == false && (
                   <div>
+                    <ArrowBackIcon
+                      style={{
+                        marginBottom: '20px',
+                        marginTop: '-10px',
+                        marginLeft: '-10px',
+                      }}
+                      onClick={() => setAddConfig(false)}
+                    />
                     <div class='material-datatables' id='case-tbl'>
                       <div
                         style={{
@@ -223,11 +322,23 @@ const Configuration = () => {
                               onChange={(e) => {
                                 setConfigType(e.target.value);
                                 console.log('e.target.name', e.target.value);
+                                axios
+                                  .post(
+                                    'http://3.130.2.241:5000/config/get_factory_settings',
+                                    {
+                                      config_type: e.target.value,
+                                      organization,
+                                    }
+                                  )
+                                  .then((res) => {
+                                    setFactorySettings(res.data);
+                                    console.log(res.data);
+                                  });
                               }}>
-                              <MenuItem value='Null Flavours Configuration'>
-                                R3 and Null Flavours Configuration
+                              <MenuItem value='R3 Configuration'>
+                                R3 Configuration
                               </MenuItem>
-                              <MenuItem value='R2 and R3 Configuration'>
+                              <MenuItem value='R2 Configuration'>
                                 R2 Configuration
                               </MenuItem>
                             </Select>
@@ -246,14 +357,7 @@ const Configuration = () => {
                           float: 'right',
                         }}
                         onClick={() => {
-                          axios.post(
-                            'http://3.130.2.241:5000/config/post_config',
-                            {
-                              configuration_type: configType,
-                              organization: organization,
-                            }
-                          );
-                          setSubmitButton(true);
+                          handleContinue();
                         }}>
                         Continue
                       </button>

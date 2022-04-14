@@ -7,48 +7,48 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-const R2AndR3Configuration = () => {
-  function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-  }
-
-  const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-  ];
+const R2AndR3Configuration = (props) => {
+  const { viewTableData } = props;
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label='simple table'>
-        <TableHead>
-          <TableRow>
-            <TableCell>Feild Name</TableCell>
-            <TableCell align='right'>R2 dtd</TableCell>
-            <TableCell align='right'>R3 OID</TableCell>
-            <TableCell align='right'>R2 Value</TableCell>
-            <TableCell align='right'>R3 Value</TableCell>
-            <TableCell align='right'>Organization</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow
-              key={row.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-              <TableCell component='th' scope='row'>
-                {row.name}
-              </TableCell>
-              <TableCell align='right'>{row.calories}</TableCell>
-              <TableCell align='right'>{row.fat}</TableCell>
-              <TableCell align='right'>{row.carbs}</TableCell>
-              <TableCell align='right'>{row.protein}</TableCell>
+    <div style={{ height: '500px', width: '1050px', overflowY: 'scroll' }}>
+      <TableContainer component={Paper}>
+        <Table
+          style={{
+            height: '500x',
+            maxHeight: '500px',
+            width: '1000px',
+            minHeight: '500px',
+          }}
+          aria-label='simple table'>
+          <TableHead>
+            <TableRow>
+              <TableCell>Feild Name</TableCell>
+              <TableCell align='center'>E2B</TableCell>
+              <TableCell align='center'>R2 DTD</TableCell>
+              <TableCell align='center'>R2 Value</TableCell>
+              <TableCell align='center'>Organization</TableCell>
+              <TableCell align='center'>value</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {viewTableData.map((row) => (
+              <TableRow
+                key={row.field_name}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableCell component='th' scope='row'>
+                  {row.field_name}
+                </TableCell>
+                <TableCell align='center'>{row.e2b}</TableCell>
+                <TableCell align='center'>{row.r2_dtd}</TableCell>
+                <TableCell align='center'>{row.r2_value}</TableCell>
+                <TableCell align='center'>{row.organization}</TableCell>
+                <TableCell align='center'>{row.value}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
   );
 };
 

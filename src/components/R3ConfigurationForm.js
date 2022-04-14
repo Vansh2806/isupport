@@ -11,7 +11,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 // import { Select } from 'antd';
 import axios from 'axios';
 const { Option } = Select;
-const R2AndR3ConfigurationForm = (props) => {
+const R3ConfigurationForm = (props) => {
   const [documents, setDocuments] = useState([]);
   const { setAddConfig, setSubmitButton } = props;
   const [state, setState] = useState({
@@ -114,63 +114,20 @@ const R2AndR3ConfigurationForm = (props) => {
                     disabled
                   />
                 </div>
-
-                <div class='col-md-4'>
-                  <FormControl
-                    fullWidth
-                    variant='standard'
-                    style={{ marginTop: '16px' }}>
-                    <Select
-                      native={true}
-                      defaultValue={item.e2b}
-                      onChange={(e) => {
-                        setDocuments(
-                          documents.map((obj) => {
-                            if (obj.id == index) {
-                              return { ...obj, e2b: e.target.value };
-                            }
-                            return obj;
-                          })
-                        );
-                      }}
-                      disabled={item.disabled}
-                      label={item.e2b}>
-                      {item.e2b == 'e2b' ? (
-                        <>
-                          <option value={item.e2b}>{item.e2b}</option>
-                          <option value='Non E2B'>Non E2B</option>
-                          <option value='E2B+'>E2B+</option>
-                        </>
-                      ) : item.e2b == 'non-e2b' ? (
-                        <>
-                          <option value={item.e2b}>{item.e2b}</option>
-                          <option value='E2B'>E2B</option>
-                          <option value='E2B+'>E2B+</option>
-                        </>
-                      ) : (
-                        <>
-                          <option value={item.value}>{item.e2b}</option>
-                          <option value='E2B'>E2B</option>
-                          <option value='Non E2B'>Non E2B</option>
-                        </>
-                      )}
-                    </Select>
-                  </FormControl>
-                </div>
               </div>
               <div className='row card-body mt-3'>
                 <div class='col-md-4'>
                   <TextField
                     id='standard-basic'
-                    label='R2 Display Name'
+                    label='R3 Display Name'
                     variant='standard'
-                    name='r2_dtd'
-                    value={item.r2_dtd}
+                    name='r3_displayname'
+                    value={item.r3_displayname}
                     onChange={(e) => {
                       setDocuments(
                         documents.map((obj) => {
                           if (obj.id == index) {
-                            return { ...obj, r2_dtd: e.target.value };
+                            return { ...obj, r3_displayname: e.target.value };
                           }
                           return obj;
                         })
@@ -180,18 +137,19 @@ const R2AndR3ConfigurationForm = (props) => {
                     disabled={item.disabled}
                   />
                 </div>
+
                 <div class='col-md-4'>
                   <TextField
                     id='standard-basic'
-                    label='R2 Value'
+                    label='R3 Value'
                     variant='standard'
-                    name='r2_value'
-                    value={item.r2_value}
+                    name='r3_value'
+                    value={item.r3_value}
                     onChange={(e) => {
                       setDocuments(
                         documents.map((obj) => {
                           if (obj.id == index) {
-                            return { ...obj, r2_value: e.target.value };
+                            return { ...obj, r3_value: e.target.value };
                           }
                           return obj;
                         })
@@ -263,4 +221,4 @@ const R2AndR3ConfigurationForm = (props) => {
   );
 };
 
-export default R2AndR3ConfigurationForm;
+export default R3ConfigurationForm;
