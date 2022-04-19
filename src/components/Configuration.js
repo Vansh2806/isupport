@@ -15,6 +15,10 @@ import R3ConfigurationForm from './R3ConfigurationForm';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import EditNullFlavourConfForm from './EditNullFlavourConfForm';
 import EditR2AndR3ConfForm from './EditR2AndR3ConfForm';
+import R2Configuration from './R2Configuration';
+import E2BConfiguration from './E2BConfiguration';
+import R3Configuration from './R3Configuration';
+import R3NullFlavours from './R3NullFlavours';
 import Modal from '@mui/material/Modal';
 import axios from 'axios';
 const Configuration = () => {
@@ -43,33 +47,33 @@ const Configuration = () => {
     });
   }, []);
   const handleContinue = () => {
-    let arr = factorySettings;
-    // setSubmitButton(true);
-    arr.forEach((item) => {
-      item.organization = organization;
-    });
-    console.log('arr', arr);
-    setFactorySettings(arr);
+    // let arr = factorySettings;
+    setSubmitButton(true);
+    // arr.forEach((item) => {
+    //   item.organization = organization;
+    // });
+    // console.log('arr', arr);
+    // setFactorySettings(arr);
     // axios.post('http://3.130.2.241:5000/config/post_factory_settings', {
     //   config_type: configType,
     //   data: arr,
     // });
-    axios
-      .post('http://3.130.2.241:5000/config/post_config', {
-        configuration_type: configType,
-        organization: organization,
-        data: arr,
-      })
-      .then((res) => {
-        console.log('response', res.data);
-        setConfigRes(res.data);
-        if (res.data != 'Configuration Already Exists') {
-          setSubmitButton(true);
-        }
-        setTimeout(() => {
-          setConfigRes('');
-        }, 2000);
-      });
+    // axios
+    //   .post('http://3.130.2.241:5000/config/post_config', {
+    //     configuration_type: configType,
+    //     organization: organization,
+    //     data: arr,
+    //   })
+    //   .then((res) => {
+    //     console.log('response', res.data);
+    //     setConfigRes(res.data);
+    //     if (res.data != 'Configuration Already Exists') {
+    //       setSubmitButton(true);
+    //     }
+    //     setTimeout(() => {
+    //       setConfigRes('');
+    //     }, 2000);
+    //   });
   };
   const handleViewOpen = () => {
     setViewModal(true);
@@ -248,22 +252,33 @@ const Configuration = () => {
                 <h3 class='card-title'>Configurations</h3>
               </div>
 
-              {configType == 'R3 Configuration' && submitButton == true && (
+              {/* {configType == 'R3 Configuration' && submitButton == true && (
                 <R3ConfigurationForm
                   setAddConfig={setAddConfig}
                   configType={configType}
                   organization={organization}
                   setSubmitButton={setSubmitButton}
                 />
-              )}
-              {configType == 'R2 Configuration' && submitButton == true && (
+              )} */}
+              {/* {configType == 'R2 Configuration' && submitButton == true && (
                 <R2AndR3ConfigurationForm
                   setAddConfig={setAddConfig}
                   configType={configType}
                   organization={organization}
                   setSubmitButton={setSubmitButton}
                 />
+              )} */}
+              {configType == 'E2B Configuration' && submitButton == true && (
+                <E2BConfiguration />
               )}
+              {configType == 'R2 Configuration' && submitButton == true && (
+                <R2Configuration />
+              )}
+              {configType == 'R3 Configuration' && submitButton == true && (
+                <R3Configuration />
+              )}
+              {configType == 'R3 Null flavour Configuration' &&
+                submitButton == true && <R3Configuration />}
 
               <div class='card-body'>
                 {configRes == 'Configuration Already Exists' && (
@@ -335,11 +350,21 @@ const Configuration = () => {
                                     console.log(res.data);
                                   });
                               }}>
+                              <MenuItem value='E2B Configuration'>
+                                E2B Configuration
+                              </MenuItem>
+                              <MenuItem vlaue='Dropdown Value configuration'>
+                                Dropdown Value configuration
+                              </MenuItem>
+
                               <MenuItem value='R3 Configuration'>
                                 R3 Configuration
                               </MenuItem>
                               <MenuItem value='R2 Configuration'>
                                 R2 Configuration
+                              </MenuItem>
+                              <MenuItem value='R3 Null flavour Configuration'>
+                                R3 Null flavour Configuration
                               </MenuItem>
                             </Select>
                           </FormControl>
